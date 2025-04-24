@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.auto.model">
+    <select id="loginCase" resultType="com.auto.model.LoginCase">
+        select * from login_case where excepted=#{excepted}
+    </select>
+
+    <select id="getUserListFromCase" resultType="com.auto.model.GetUserListCase">
+        select * from get_user_list_case
+    </select>
+
+    <select id="getUserList" resultType="com.auto.model.User">
+        select * from user
+        <where>
+            <if test="userName != null and userName != ''">
+                userName=#{userName}
+            </if>
+            <if test="age != null">
+                <choose>
+                    <when test="age != 0">
+                        and age = #{age}
+                    </when>
+                </choose>
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+        </where>
+    </select>
+
+    <select id="addUserInfoFromCase" resultType="com.auto.model.AddUserCase">
+        select * from add_user_case
+    </select>
+
+    <select id="weimobActivityCreateIdCase" resultType="com.auto.model.WeimobActivityCreateIdCase">
+        select * from weimob_activity_createid
+    </select>
+
+    <select id="weimobActivityCreateCase" resultType="com.auto.model.WeimobActivityCreateCase">
+        select * from weimob_activity_create where action=#{action}
+    </select>
+</mapper>

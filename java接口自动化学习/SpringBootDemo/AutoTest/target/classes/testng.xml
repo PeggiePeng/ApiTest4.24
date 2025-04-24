@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<suite name="用户管理测试套件">
+    <test name="用户管理测试用例">
+        <classes>
+            <class name="com.auto.cases.WeimobActivityCreateIdTest">
+                <methods>
+                    <include name="activityCreateId"/>
+                </methods>
+            </class>
+            <class name="com.auto.cases.WeimobActivityStatusTest">
+                <methods>
+                    <include name="create"/>
+                    <include name="state"/>
+                    <include name="update"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
