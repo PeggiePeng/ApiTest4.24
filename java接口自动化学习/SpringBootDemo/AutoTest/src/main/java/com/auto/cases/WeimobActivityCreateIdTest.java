@@ -3,8 +3,6 @@ package com.auto.cases;
 import com.alibaba.fastjson.JSON;
 import com.auto.common.BaseTest;
 import com.auto.common.common;
-import com.auto.config.TestConfig;
-import com.auto.model.AddUserCase;
 import com.auto.model.WeimobActivityCreateIdCase;
 import com.auto.utils.GlobalVariableUtil;
 import org.json.JSONObject;
@@ -40,7 +38,7 @@ public class WeimobActivityCreateIdTest extends BaseTest {
     @Test(dataProvider = "activityCreateIdCaseData")
     public void activityCreateId(WeimobActivityCreateIdCase weimobActivityCreateIdCase) throws IOException {
         JSONObject activityCreateIdParam = activityCreateIdCaseParams(weimobActivityCreateIdCase);
-        JSONObject responseData = getResult(activityCreateIdParam, TestConfig.bigwheelCreateId);
+        JSONObject responseData = getResult(activityCreateIdParam, createIdUrl);
 
         String activityId = responseData.getJSONObject("data").getString("activityId");
         long poolId = responseData.getJSONObject("data").getLong("poolId");

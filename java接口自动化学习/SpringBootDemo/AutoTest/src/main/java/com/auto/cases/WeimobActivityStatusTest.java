@@ -6,6 +6,7 @@ import com.auto.common.common;
 import com.auto.config.TestConfig;
 import com.auto.model.WeimobActivityCreateCase;
 import com.auto.utils.GlobalVariableUtil;
+import com.auto.utils.JsonMergeUtil;
 import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -48,9 +49,7 @@ public class WeimobActivityStatusTest extends BaseTest {
         String prizeSetting = null;
         String ruleSetting = null;
         if (weimobActivityCreateCase.getTemplateKey().equals("bigwheel")) {
-            basicSetting = basicSettingData.replace("${activityId}", GlobalVariableUtil.activityId_bigwheel)
-                    .replace("${startTime}", common.dateTimeFormat(0))
-                    .replace("${endTime}", common.dateTimeFormat(7));
+            basicSetting = basicSettingData.replace("${activityId}", GlobalVariableUtil.activityId_bigwheel);
 
             //从全局变量读取奖品id，并传入数据串中
             prizeSetting = common.replacePlaceholdersfromMap(weimobActivityCreateCase.getPrizeSettings(),
@@ -58,9 +57,7 @@ public class WeimobActivityStatusTest extends BaseTest {
             ruleSetting = common.replacePlaceholdersfromMap(weimobActivityCreateCase.getRuleSettings(),
                     GlobalVariableUtil.prizeId_bigwheel);
         }if(weimobActivityCreateCase.getTemplateKey().equals("scratch")){
-            basicSetting = basicSettingData.replace("${activityId}", GlobalVariableUtil.activityId_scratch)
-                    .replace("${startTime}", common.dateTimeFormat(0))
-                    .replace("${endTime}", common.dateTimeFormat(7));
+            basicSetting = basicSettingData.replace("${activityId}", GlobalVariableUtil.activityId_scratch);
 
             //从全局变量读取奖品id，并传入数据串中
             prizeSetting = common.replacePlaceholdersfromMap(weimobActivityCreateCase.getPrizeSettings(),
@@ -71,7 +68,7 @@ public class WeimobActivityStatusTest extends BaseTest {
 
         JSONObject params = new JSONObject();
         params.put("themeCode", weimobActivityCreateCase.getThemeCode());
-        params.put("basicSettings", JSON.parseObject(basicSetting));
+        params.put("basicSettings", JSON.parseObject(common.replacePlaceholdersfromMap(basicSetting,GlobalVariableUtil.getActivityTime())));
         params.put("prizeSettings", JSON.parseObject(prizeSetting));
         params.put("ruleSettings", JSON.parseObject(ruleSetting));
 
@@ -85,7 +82,7 @@ public class WeimobActivityStatusTest extends BaseTest {
         return params;
     }
 
-    public JSONObject createSnCodeparams(WeimobActivityCreateCase weimobActivityCreateCase){
+    public JSONObject createSnCodeParams(WeimobActivityCreateCase weimobActivityCreateCase){
         JSONObject params =  new JSONObject();
         params.put("generateWay",weimobActivityCreateCase.getGenerateWay());
         params.put("number",weimobActivityCreateCase.getNumber());
@@ -119,8 +116,8 @@ public class WeimobActivityStatusTest extends BaseTest {
             GlobalVariableUtil.prizeId_scratch = common.replacePlaceholdersToMap(weimobActivityCreateCase.getPrizeSettings(), "createPrizeId", GlobalVariableUtil.prizeId_scratch);
         }
 
-        JSONObject createParam = common.unionJsonObject(commonParams(weimobActivityCreateCase),activityEditCaseParams(weimobActivityCreateCase));
-        JSONObject responseData = getResult(createParam, TestConfig.bigwheelCreate);
+        JSONObject createParam = JsonMergeUtil.mergeJson(commonParams(weimobActivityCreateCase),activityEditCaseParams(weimobActivityCreateCase));
+        JSONObject responseData = getResult(createParam, createUrl);
 
         Assert.assertTrue(responseData.getBoolean("data"));
         Assert.assertEquals(responseData.getString("errmsg"), "处理成功");
@@ -129,20 +126,20 @@ public class WeimobActivityStatusTest extends BaseTest {
     @Test(dataProvider = "activityCreateCaseData",dependsOnMethods = "create",description = "活动创建成功后上架")
     public void state(WeimobActivityCreateCase weimobActivityCreateCase) throws IOException {
 
-        JSONObject stateParam = common.unionJsonObject(commonParams(weimobActivityCreateCase),stateParams(weimobActivityCreateCase));
-        JSONObject responseData = getResult(stateParam, TestConfig.bigwheelState);
+        JSONObject stateParam = JsonMergeUtil.mergeJson(commonParams(weimobActivityCreateCase),stateParams(weimobActivityCreateCase));
+        JSONObject responseData = getResult(stateParam, stateUrl);
 
         Assert.assertTrue(responseData.getBoolean("data"));
         Assert.assertEquals(responseData.getString("errmsg"), "处理成功");
     }
 
-    @Test(dataProvider = "activityCreateCaseData", dependsOnMethods = "com.auto.cases.WeimobActivityCreateIdTest.activityCreateId", description = "生成虚拟奖品SN码")
-    public void createSnCode(WeimobActivityCreateCase weimobActivityCreateCase) throws IOException {
-        JSONObject createSnCodePeram = common.unionJsonObject(commonParams(weimobActivityCreateCase),createSnCodeparams(weimobActivityCreateCase));
-        JSONObject responseData = getResult(createSnCodePeram, TestConfig.createSnCode);
-
-        System.out.println(responseData);
-    }
+//    @Test(dataProvider = "activityCreateCaseData", dependsOnMethods = "com.auto.cases.WeimobActivityCreateIdTest.activityCreateId", description = "生成虚拟奖品SN码")
+//    public void createSnCode(WeimobActivityCreateCase weimobActivityCreateCase) throws IOException {
+//        JSONObject createSnCodePeram = JsonMergeUtil.mergeJson(commonParams(weimobActivityCreateCase),createSnCodeParams(weimobActivityCreateCase));
+//        JSONObject responseData = getResult(createSnCodePeram, createSnCodeUrl);
+//
+//        System.out.println(responseData);
+//    }
 
     @Test(dataProvider = "activityUpdateCaseData",dependsOnMethods = "state",description = "编辑活动")
     public void update(WeimobActivityCreateCase weimobActivityCreateCase) throws IOException {
@@ -154,8 +151,8 @@ public class WeimobActivityStatusTest extends BaseTest {
             GlobalVariableUtil.prizeId_scratch = common.replacePlaceholdersToMap(weimobActivityCreateCase.getPrizeSettings(), "updatePrizeId", GlobalVariableUtil.prizeId_scratch);
         }
 
-        JSONObject updateParam = common.unionJsonObject(commonParams(weimobActivityCreateCase),activityEditCaseParams(weimobActivityCreateCase));
-        JSONObject responseData = getResult(updateParam, TestConfig.bigwheelUpdate);
+        JSONObject updateParam = JsonMergeUtil.mergeJson(commonParams(weimobActivityCreateCase),activityEditCaseParams(weimobActivityCreateCase));
+        JSONObject responseData = getResult(updateParam, updateUrl);
         Assert.assertTrue(responseData.getBoolean("data"));
         Assert.assertEquals(responseData.getString("errmsg"), "处理成功");
     }

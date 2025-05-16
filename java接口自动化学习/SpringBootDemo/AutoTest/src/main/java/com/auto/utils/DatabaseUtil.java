@@ -19,7 +19,7 @@ public class DatabaseUtil {
         Reader reader = Resources.getResourceAsReader("databaseConfig.xml");
         //加载配置文件
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
-        //返回sqlsession，sqlsession就能够执行配置文件中的sql语句
+        //返回sqlsession
         SqlSession sqlSession = factory.openSession();
 
         return sqlSession;

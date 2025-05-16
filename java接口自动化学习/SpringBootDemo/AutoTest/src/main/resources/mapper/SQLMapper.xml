@@ -41,4 +41,8 @@
     <select id="weimobActivityCreateCase" resultType="com.auto.model.WeimobActivityCreateCase">
         select * from weimob_activity_create where action=#{action}
     </select>
+
+    <select id="weimobActivityPlayCase" resultType="com.auto.model.WeimobActivityPlayCase">
+        select * from weimob_activity_c where action=#{action}
+    </select>
 </mapper>

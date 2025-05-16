@@ -12,7 +12,12 @@
                 <methods>
                     <include name="create"/>
                     <include name="state"/>
-                    <include name="update"/>
+<!--                    <include name="update"/>-->
+                </methods>
+            </class>
+            <class name="com.auto.cases.WeimobActivityPlayTest">
+                <methods>
+                    <include name="play"/>
                 </methods>
             </class>
         </classes>

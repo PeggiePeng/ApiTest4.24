@@ -18,4 +18,5 @@ public class WeimobActivityCreateCase {
     private String description;
     private int generateWay;
     private int number;
+    private String otherInfo;
 }

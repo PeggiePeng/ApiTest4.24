@@ -1,7 +1,6 @@
 package com.auto.common;
 
 import com.alibaba.fastjson.TypeReference;
-import com.auto.config.TestConfig;
 import com.auto.utils.DatabaseUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -20,12 +19,12 @@ import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.JSON;
 
-public class common {
+public class common extends BaseTest{
 
     //数据库取表取数的公共方法
     @DataProvider(name = "dbData")
     public <T> Iterator<T> provideDataFromDb(String sqlId, Class<T> clazz, Map<String, Object> params) throws IOException {
-        SqlSession session = DatabaseUtil.getSqlSession();
+//        SqlSession session = DatabaseUtil.getSqlSession();
         List<T> dataList = session.selectList(sqlId, params);
         return dataList.iterator();
     }
@@ -40,7 +39,7 @@ public class common {
         post.setEntity(entity);
 
         String result;
-        HttpResponse response = TestConfig.httpClient.execute(post);
+        HttpResponse response = httpClient.execute(post);
         result = EntityUtils.toString(response.getEntity(),"utf-8");
 
         return new JSONObject(result);
@@ -62,10 +61,10 @@ public class common {
         return JSON.parseObject(jsonStr, new TypeReference<Map<String, Object>>() {});
     }
 
-    public static JSONObject listToJson(List<?> params) {
-        String jsonStr = JSON.toJSONString(params);
-        return JSON.parseObject(jsonStr, JSONObject.class);
-    }
+//    public static JSONObject listToJson(List<?> params) {
+//        String jsonStr = JSON.toJSONString(params);
+//        return JSON.parseObject(jsonStr, JSONObject.class);
+//    }
 
     public static String dateTimeFormat(int t){
         // 获取当前时间
@@ -77,13 +76,13 @@ public class common {
         // 将当前时间按照指定格式进行格式化
         return newTime.format(formatter);
     }
-
-    public static JSONObject unionJsonObject(JSONObject JSONObject1,JSONObject JSONObject2){
-        for (String key : JSONObject2.keySet()) {
-            JSONObject1.put(key, JSONObject2.get(key));
-        }
-        return JSONObject1;
-    }
+//
+//    public static JSONObject unionJsonObject(JSONObject JSONObject1,JSONObject JSONObject2){
+//        for (String key : JSONObject2.keySet()) {
+//            JSONObject1.put(key, JSONObject2.get(key));
+//        }
+//        return JSONObject1;
+//    }
 
     public static Map<String,String> replacePlaceholdersToMap(String input, String prizeIdStatus, Map<String,String> placeholdersMap) {
         // 检查 placeholdersMap 是否为 null
@@ -112,14 +111,23 @@ public class common {
         return placeholdersMap;
     }
 
-    public static String replacePlaceholdersfromMap(String template, Map<String, String> placeholderMap) {
+    public static String replacePlaceholdersfromMap(String template, Map<String, ?> placeholderMap) {
         String result = template;
-        if (placeholderMap !=null) {
-            for (Map.Entry<String, String> entry : placeholderMap.entrySet()) {
-                String placeholder = "${" + entry.getKey() + "}";
-                result = result.replace(placeholder, entry.getValue());
+        if (placeholderMap != null) {
+            for (Map.Entry<String, ?> entry : placeholderMap.entrySet()) {
+                String placeholder = "\"${" + entry.getKey() + "}\"";
+                Object value = entry.getValue();
+                if (value != null) {
+                    if (value instanceof String) {
+                        result = result.replace(placeholder, "\"" + value + "\"");
+                    } else {
+                        result = result.replace(placeholder, value.toString());
+                    }
+                } else {
+                    result = result.replace(placeholder, "null");
+                }
             }
         }
-            return result;
+        return result;
     }
 }

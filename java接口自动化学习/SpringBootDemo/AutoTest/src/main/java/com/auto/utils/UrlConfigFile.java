@@ -1,5 +1,6 @@
 package com.auto.utils;
 
+import com.auto.config.GetApplicationData;
 import com.auto.model.InterfaceName;
 import com.auto.model.WeimobInterfaceName;
 
@@ -41,24 +42,34 @@ public class UrlConfigFile {
     }
 
     public static String getWeimobUrl(WeimobInterfaceName name){
-        String address = bundle.getString("weimobqa.url");
+        GetApplicationData applicationData = new GetApplicationData();
+        String address = applicationData.address;
         String uri="";
         String testUrl;
 
-        if(name== WeimobInterfaceName.BIGWHEELCREATEID){
-            uri=bundle.getString("bigwheelCreateId.uri");
+        if(name== WeimobInterfaceName.CREATEID){
+            uri=applicationData.createIdUri;
         }
-        if (name==WeimobInterfaceName.BIGWHEELCREATE){
-            uri=bundle.getString("bigwheelCreate.uri");
+        if (name==WeimobInterfaceName.CREATE){
+            uri=applicationData.createUri;
         }
-        if(name==WeimobInterfaceName.BIGWHEELSTATE){
-            uri=bundle.getString("bigwheelstate.uri");
+        if(name==WeimobInterfaceName.STATE){
+            uri=applicationData.stateUri;
         }
-        if(name==WeimobInterfaceName.BIGWHEELUPDATE){
-            uri=bundle.getString("bigwheelupdate.uri");
+        if(name==WeimobInterfaceName.UPDATE){
+            uri=applicationData.updateUri;
         }
         if(name == WeimobInterfaceName.CREATESNCODE){
-            uri=bundle.getString("createSnCode.uri");
+            uri=applicationData.createSnCodeUri;
+        }
+        if (name == WeimobInterfaceName.PLAY){
+            uri=applicationData.playUri;
+        }
+        if (name == WeimobInterfaceName.LISTWINNERBYPAGE){
+            uri=applicationData.listWinnerByPageUri;
+        }
+        if(name==WeimobInterfaceName.USERQUERY){
+            uri=applicationData.userList;
         }
 
         testUrl = address + uri;
