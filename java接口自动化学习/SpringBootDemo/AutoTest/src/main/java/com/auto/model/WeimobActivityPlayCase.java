@@ -9,4 +9,5 @@ public class WeimobActivityPlayCase {
     private String i18n;
     private String otherInfo;
     private String templateKey;
+    private String action;
 }

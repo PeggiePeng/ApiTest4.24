@@ -8,6 +8,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONObject;
+import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
 
 import java.io.IOException;
@@ -117,6 +118,34 @@ public class common extends BaseTest{
             for (Map.Entry<String, ?> entry : placeholderMap.entrySet()) {
                 String placeholder = "\"${" + entry.getKey() + "}\"";
                 Object value = entry.getValue();
+                if (value != null) {
+                    if (value instanceof String) {
+                        result = result.replace(placeholder, "\"" + value + "\"");
+                    } else {
+                        result = result.replace(placeholder, value.toString());
+                    }
+                } else {
+                    result = result.replace(placeholder, "null");
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 使用 ITestContext 中的数据替换 JSON 字符串中的占位符
+     * @param json 原始 JSON 字符串
+     * @param context TestNG 上下文
+     * @return 替换后的 JSON 字符串
+     */
+    public static String replacePlaceholdersfromITestContext(String json, ITestContext context) {
+        String result = json;
+        if (context != null) {
+            // 获取所有属性名
+            java.util.Set<String> attributeNames = context.getAttributeNames();
+            for (String name : attributeNames) {
+                String placeholder = "\"${" + name + "}\"";
+                Object value = context.getAttribute(name);
                 if (value != null) {
                     if (value instanceof String) {
                         result = result.replace(placeholder, "\"" + value + "\"");

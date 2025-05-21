@@ -15,21 +15,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class WeimobUserListQueryTest extends BaseTest {
+public class WeimobBUserPrizeListTest extends BaseTest {
 
-    @DataProvider(name="userListCaseData")
+    @DataProvider(name="userPrizeListCaseData")
     public Iterator<WeimobActivityCreateCase> provideDataFromDb() throws IOException {
         Map<String, Object> params = new HashMap<>();
-        params.put("action","userQuery");
+        params.put("action","prizeListQuery");
         return new common().<WeimobActivityCreateCase>provideDataFromDb("weimobActivityCreateCase", WeimobActivityCreateCase.class, params);
     }
 
-    @Test(dataProvider = "userListCaseData")
+    @Test(dataProvider = "userPrizeListCaseData")
     public void listWinnerByPage(WeimobActivityCreateCase weimobActivityCreateCase) throws IOException {
         JSONObject requestData = JsonMergeUtil.mergeJson(DataForB.commonParams(weimobActivityCreateCase), DataForB.otherInfo(weimobActivityCreateCase));
-        JSONObject responseData = common.getResult(requestData,userlistUrl);
+        JSONObject responseData = common.getResult(requestData,listWinnerByPageUrl);
 
-        System.out.println(responseData);
         Assert.assertEquals(responseData.getString("errmsg"),"处理成功");
     }
 }

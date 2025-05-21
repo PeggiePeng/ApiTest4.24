@@ -17,7 +17,7 @@ import java.util.Map;
 
 import static com.auto.common.common.getResult;
 
-public class WeimobActivityCreateIdTest extends BaseTest {
+public class WeimobBCreateIdTest extends BaseTest {
 
     public JSONObject activityCreateIdCaseParams(WeimobActivityCreateIdCase weimobActivityCreateIdCase){
         JSONObject params = new JSONObject();

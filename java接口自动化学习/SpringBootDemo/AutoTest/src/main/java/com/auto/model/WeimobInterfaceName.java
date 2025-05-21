@@ -8,5 +8,7 @@ public enum WeimobInterfaceName {
     UPDATE,
     CREATESNCODE,
     LISTWINNERBYPAGE,
-    USERQUERY
+    USERQUERY,
+    USERPRIZE,
+    EXCHANGE
 }

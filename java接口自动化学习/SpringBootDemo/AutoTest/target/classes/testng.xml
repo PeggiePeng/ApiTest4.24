@@ -3,21 +3,31 @@
 <suite name="用户管理测试套件">
     <test name="用户管理测试用例">
         <classes>
-            <class name="com.auto.cases.WeimobActivityCreateIdTest">
+            <class name="com.auto.cases.WeimobBCreateIdTest">
                 <methods>
                     <include name="activityCreateId"/>
                 </methods>
             </class>
-            <class name="com.auto.cases.WeimobActivityStatusTest">
+            <class name="com.auto.cases.WeimobBStatusTest">
                 <methods>
                     <include name="create"/>
                     <include name="state"/>
 <!--                    <include name="update"/>-->
                 </methods>
             </class>
-            <class name="com.auto.cases.WeimobActivityPlayTest">
+            <class name="com.auto.cases.WeimobCPlayTest">
                 <methods>
                     <include name="play"/>
+                </methods>
+            </class>
+            <class name="com.auto.cases.WeimobCUserPrizeListTest">
+                <methods>
+                    <include name="listWinnerByPage"/>
+                </methods>
+            </class>
+            <class name="com.auto.cases.weimobCExchangeTest">
+                <methods>
+                    <include name="exchange"/>
                 </methods>
             </class>
         </classes>

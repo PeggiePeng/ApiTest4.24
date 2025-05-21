@@ -16,7 +16,7 @@ import java.util.Map;
 
 import com.auto.data.DataForC;
 
-public class WeimobActivityPlayTest extends BaseTest {
+public class WeimobCPlayTest extends BaseTest {
 
     @DataProvider(name="playCaseData")
     public Iterator<WeimobActivityPlayCase> provideDataFromDb() throws IOException {

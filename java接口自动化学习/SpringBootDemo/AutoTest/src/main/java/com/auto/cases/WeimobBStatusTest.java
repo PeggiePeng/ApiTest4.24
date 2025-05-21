@@ -3,7 +3,6 @@ package com.auto.cases;
 import com.alibaba.fastjson.JSON;
 import com.auto.common.BaseTest;
 import com.auto.common.common;
-import com.auto.config.TestConfig;
 import com.auto.model.WeimobActivityCreateCase;
 import com.auto.utils.GlobalVariableUtil;
 import com.auto.utils.JsonMergeUtil;
@@ -19,7 +18,7 @@ import java.util.Map;
 
 import static com.auto.common.common.getResult;
 
-public class WeimobActivityStatusTest extends BaseTest {
+public class WeimobBStatusTest extends BaseTest {
 
     public JSONObject commonParams(WeimobActivityCreateCase weimobActivityCreateCase) {
         String extendInfoData = weimobActivityCreateCase.getExtendInfo();
@@ -106,7 +105,7 @@ public class WeimobActivityStatusTest extends BaseTest {
         return new common().<WeimobActivityCreateCase>provideDataFromDb("weimobActivityCreateCase", WeimobActivityCreateCase.class, params);
     }
 
-    @Test(dataProvider = "activityCreateCaseData",dependsOnMethods = "com.auto.cases.WeimobActivityCreateIdTest.activityCreateId",description = "创建活动")
+    @Test(dataProvider = "activityCreateCaseData",dependsOnMethods = "com.auto.cases.WeimobBCreateIdTest.activityCreateId",description = "创建活动")
     public void create(WeimobActivityCreateCase weimobActivityCreateCase) throws IOException {
 
         //读取奖品id个数，将所有奖品id存入全局变量中
@@ -133,7 +132,7 @@ public class WeimobActivityStatusTest extends BaseTest {
         Assert.assertEquals(responseData.getString("errmsg"), "处理成功");
     }
 
-//    @Test(dataProvider = "activityCreateCaseData", dependsOnMethods = "com.auto.cases.WeimobActivityCreateIdTest.activityCreateId", description = "生成虚拟奖品SN码")
+//    @Test(dataProvider = "activityCreateCaseData", dependsOnMethods = "com.auto.cases.WeimobBCreateIdTest.activityCreateId", description = "生成虚拟奖品SN码")
 //    public void createSnCode(WeimobActivityCreateCase weimobActivityCreateCase) throws IOException {
 //        JSONObject createSnCodePeram = JsonMergeUtil.mergeJson(commonParams(weimobActivityCreateCase),createSnCodeParams(weimobActivityCreateCase));
 //        JSONObject responseData = getResult(createSnCodePeram, createSnCodeUrl);

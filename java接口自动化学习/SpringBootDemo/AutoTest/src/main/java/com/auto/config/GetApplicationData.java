@@ -19,6 +19,8 @@ public class GetApplicationData {
     public String playUri=bundle.getString("play.uri");
     public String listWinnerByPageUri=bundle.getString("listWinnerByPage.uri");
     public String userList=bundle.getString("userList.uri");
+    public String userPrizes=bundle.getString("userPrizes.uri");
+    public String exchange=bundle.getString("exchange.uri");
 
     //获取店铺信息
     public static Map<String,Object> getShopInfo(){

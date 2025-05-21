@@ -23,6 +23,8 @@ public class BaseTest {
     public static String playUrl;
     public static String listWinnerByPageUrl;
     public static String userlistUrl;
+    public static String userPrizesUrl;
+    public static String exchangeUrl;
 
     public static CookieStore store = new BasicCookieStore();
     public static CloseableHttpClient httpClient= HttpClients.custom().setDefaultCookieStore(store).build();
@@ -51,5 +53,7 @@ public class BaseTest {
         playUrl = UrlConfigFile.getWeimobUrl(WeimobInterfaceName.PLAY);
         listWinnerByPageUrl = UrlConfigFile.getWeimobUrl(WeimobInterfaceName.LISTWINNERBYPAGE);
         userlistUrl = UrlConfigFile.getWeimobUrl(WeimobInterfaceName.USERQUERY);
+        userPrizesUrl = UrlConfigFile.getWeimobUrl(WeimobInterfaceName.USERPRIZE);
+        exchangeUrl = UrlConfigFile.getWeimobUrl(WeimobInterfaceName.EXCHANGE);
     }
 }

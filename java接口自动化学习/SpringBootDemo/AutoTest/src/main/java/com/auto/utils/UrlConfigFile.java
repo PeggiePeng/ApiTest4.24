@@ -71,6 +71,12 @@ public class UrlConfigFile {
         if(name==WeimobInterfaceName.USERQUERY){
             uri=applicationData.userList;
         }
+        if(name==WeimobInterfaceName.USERPRIZE){
+            uri=applicationData.userPrizes;
+        }
+        if(name==WeimobInterfaceName.EXCHANGE){
+            uri=applicationData.exchange;
+        }
 
         testUrl = address + uri;
         return testUrl;
